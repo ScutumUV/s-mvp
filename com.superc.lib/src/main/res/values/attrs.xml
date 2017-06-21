@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BaseEditText">
+        <attr name="showResetTextEnable" format="boolean" />
+        <attr name="showExchangePasswordVisibleEnable" format="boolean" />
+        <attr name="addCommaEveryThreeNumber" format="boolean" />
+        <attr name="forbidPointFirstPosition" format="boolean" />
+        <attr name="forbidMinusFirstPosition" format="boolean" />
+        <attr name="forbidZeroBeforeNotZero" format="boolean" />
+        <attr name="allowedInputEmoji" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="RRecyclerView">
+        <attr name="rLayoutManager">
+            <enum name="LinearLayoutManager" value="0" />
+            <enum name="GridLayoutManager" value="1" />
+            <enum name="StaggeredGridLayoutManager" value="2" />
+        </attr>
+        <attr name="rOrientation">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="showDefaultDivider" format="boolean" />
+        
+    </declare-styleable>
+
+</resources>

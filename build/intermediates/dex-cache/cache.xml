@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.3.1_a79cc533e8ea8d7bf922a0084047fddb44462f7d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.3.1_42e6ecf6742698e692f0a479ef51f438535546fa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support.constraint/constraint-layout/1.0.2/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support.constraint-constraint-layout-1.0.2_be6b4476be3651c29aa3da54dc79d7f5f0bca939.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-25.3.1_8c8e4e60c74d7475f949fd343b54fc6662df6782.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/io.reactivex/rxandroid/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="aa81bfe8c5cc88c2472ca936ae71f0c3dd1766df">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/io.reactivex-rxandroid-1.0.1_8a6bfc4149f05c863f584920ff1a1d3a748bb5a8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.5.1/bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc/butterknife-annotations-8.5.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bb67dad90bab7cd77a8f7f1b8442b47e3a2326bc">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/butterknife-annotations-8.5.1_7a3bb35b26d6685e0e3a6bd6811a5f66b9650274.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="40e5cb8708fc25fe57cb403cc82e9ef98376b648">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fbcore-0.12.0_abad75d704db9b156c8bd0260a5b109d8e2f3aff.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.0-beta3/97675641051febfee098903cc0eff62f2826e34e/retrofit-2.0.0-beta3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="97675641051febfee098903cc0eff62f2826e34e">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/retrofit-2.0.0-beta3_4810fb4660496f98d638557baa08108b01e88f46.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.0.0-RC1/be7e96331952019f16dc52dce09ab25df29353d7/okhttp-3.0.0-RC1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="be7e96331952019f16dc52dce09ab25df29353d7">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/okhttp-3.0.0-RC1_72ba449ecb65bc73fc102de980d7e0a82dff7e19.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.3.1_cb05ca351e415915dd0886099170829dba7aa717.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="914f5d3e3ace66080e59613708f06d129a222e25">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-25.3.1_958ca426979d2fd53c1273a08fecf29353f5d475.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-base/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c9a86e6bc8300fc00c191949ac61a2f7165e35c7">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-base-0.12.0_7273e47825c832f3bfaf491d7071c8b1080a7467.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/design/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-design-25.3.1_97fc73ce9698097009f4d8fe517ab3982d81a284.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/gson-2.7_25b934bd904fcc7764defadc312addf82f90199d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/glide-3.7.0_71dcdda13d721da3ea081243d11985b578c254c3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/library-2.4.0_a4741648fd60dd11a63d8fd5267d32f5afe61a26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.jakewharton/butterknife/8.5.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="19f281a785ca0eb5f6799fc7bf7ca199a9ca1e8b">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.jakewharton-butterknife-8.5.1_ea4fef49fb874e290990b5df0dcb11c923236109.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.0.0-RC1/83fed2e3554b8bacf8209bc22b62d76d4f674533/logging-interceptor-3.0.0-RC1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="83fed2e3554b8bacf8209bc22b62d76d4f674533">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/logging-interceptor-3.0.0-RC1_96d050892c2a2785595207c6041f143ea36d96f4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/io.reactivex/rxjava/1.1.0/748f0546d5c3c27f1aef07270ffea0c45f0c42a4/rxjava-1.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="748f0546d5c3c27f1aef07270ffea0c45f0c42a4">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/rxjava-1.1.0_cf726af67fe00465db62d847194e85e7149d7426.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/bolts-tasks-1.4.0_b437536e544c98701d3ce9192f4c62199d834e0f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.databinding/library/1.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="957dc30b1495f8689271e00d56ab09cc9192df02">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.databinding-library-1.2.1_995869f985e2813c62084435a2ae2247c0168507.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.databinding/adapters/1.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c56d29136c2257f63f08c29c4e739efb03b06c7d">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.databinding-adapters-1.2.1_311dbe72358109dc58d3bce69598540bc4fba44d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.3.1_cb4b0d6e9af0c08e00b5ddcec6cb11429efee884.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.cocosw/bottomsheet/1.3.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="37a4672e2ae8d65082bd66183d12fcd5d106a336">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.cocosw-bottomsheet-1.3.0_42d57debeb6eb2dd01ccfbf977934b27f5744269.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/okio-1.6.0_9547461a668730bd003e6acdf4f54fd502745e6b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/adapter-rxjava/2.0.0-beta3/b2c9a66010be6540ee42c033de4ae43085dc7856/adapter-rxjava-2.0.0-beta3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b2c9a66010be6540ee42c033de4ae43085dc7856">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/adapter-rxjava-2.0.0-beta3_d6bd516ab70e3a8116c03be42ea4f8f55595111a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.0-beta3/8bff75d7360aaa3866f1e6949c877dfcc2b3d3e2/converter-gson-2.0.0-beta3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="8bff75d7360aaa3866f1e6949c877dfcc2b3d3e2">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/converter-gson-2.0.0-beta3_c723c392f6b22be909afe483cea52ddd2a090939.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/transition/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-transition-25.3.1_4544be401cd35fff7a1b95862c78c9a3a02723ab.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/SuperChenDemo/com.superc.lib/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f3abc0642231b9bbefcc2c8127e3e7db36f723f7">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/SuperChenDemo-com.superc.lib-unspecified_3e054139d86516ebfa3c18499c21198f0f512aac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1e346707e4770db216049a532ab3eb5e317cf82a">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-drawee-0.12.0_ce43d77301b8d9a1843446032e957c5cb3152982.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/animated-base/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7ba22785d529a9cd95f714ca782a59846a22ce02">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-animated-base-0.12.0_dbc738173c4fd290d2ecf69baf11ea25b130bb5c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.3.1_01e94a3d69a730e7c37ab480734f1f6880ea5235.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.3.1_1db09302584e601dfdfc54f3b92abc7baa7e39c3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a540784239c611ea490593e2053a5e2890675c68">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-fresco-0.12.0_a2bfc3e897c15b2a857a31585ac96bdc719ea0b7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.3.1_c034504166ee275b1aa1d4f63a1107f411422854.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/animated-gif/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="92e359c53b444598bf7973f1cbf31c8dc769e19f">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-animated-gif-0.12.0_d86241194d9e2ffbb3b7e5796c95b6c4446eef81.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.12.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="145da27a459a63ea0c4e318930365cf0a8b8e891">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.facebook.fresco-imagepipeline-0.12.0_f92fd0ac980fad851a77eb255624f8fec8ef9b03.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_d2dbc9ce09d9180cca9a6c8948073280cebe8131.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.3.1_5ac0cc3c0bab87ce987d97c28c2d5c44e9ecc6dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_e8b9000d78d2761f9902592f4259bd1eeff22173.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.3.1_0026c96914d56d26359458849838f5aeb81c8b02.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/superchen/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/2.2.3/b4b51d1925cdfda98fd861230c1ecb5855500129/baseLibrary-2.2.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b4b51d1925cdfda98fd861230c1ecb5855500129">
+        <dex dex="/Users/superchen/SuperChen/WorkSpace/AndroidProjects/Demo/SuperChenDemo/app/build/intermediates/pre-dexed/debug/baseLibrary-2.2.3_5ae3c34525bf37974b680bdad1ed281dfbb9e72e.jar" />
+    </item>
+
+</items>
