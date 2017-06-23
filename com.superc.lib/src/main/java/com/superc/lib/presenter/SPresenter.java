@@ -7,5 +7,9 @@ import com.superc.lib.ui.SView;
  */
 public interface SPresenter<V extends SView> {
 
-    void  unSubscribe();
+    /**
+     * 创建 CompositeSubscription 对象 使用CompositeSubscription来持有所有的Subscriptions，
+     * 然后在onDestroy()或者onDestroyView()里取消所有的订阅。
+     */
+    void unSubscribe();
 }

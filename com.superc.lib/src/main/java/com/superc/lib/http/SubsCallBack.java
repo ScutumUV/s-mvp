@@ -12,5 +12,5 @@ public interface SubsCallBack<C> {
 
     void onNext(C t);
 
-    void onError(Object e);
+    Boolean onError(Object e);
 }

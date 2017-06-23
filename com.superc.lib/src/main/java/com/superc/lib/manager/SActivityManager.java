@@ -133,7 +133,7 @@ public final class SActivityManager {
         activityStack.clear();
     }
 
-    public void unbindReferences(View view) {
+    public void unbindReferences(@NonNull View view) {
         try {
             if (view != null) {
                 view.destroyDrawingCache();

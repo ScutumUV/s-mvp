@@ -23,26 +23,22 @@ public class SBaseModel<T> implements SModel, Parcelable, Serializable {
     private static final long serialVersionUID = 6109859576148233150L;
     public static final String TYPE = "SBaseModel";
 
-    private SBaseModel model = this;
-    protected String __type;
-    protected String className;
-    protected String objectId;
+    private SBaseModel mModel = this;
+    protected String mType;
+    protected String mClassName;
+    protected String mObjectId;
 
-    public SBaseModel(){
+    public SBaseModel() {
     }
-
-//    protected SBaseModel(String name) {
-//        Bundle b = in.readBundle(getClass().getClassLoader());
-//        if (b != null) {
-//            model = b.getParcelable("data");
-//        }
-//    }
 
     protected SBaseModel(Parcel in) {
         Bundle b = in.readBundle(getClass().getClassLoader());
         if (b != null) {
-            model = b.getParcelable("data");
+            mModel = b.getParcelable("data");
         }
+        mType = in.readString();
+        mClassName = in.readString();
+        mObjectId = in.readString();
     }
 
     @Override
@@ -99,8 +95,11 @@ public class SBaseModel<T> implements SModel, Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         Bundle b = new Bundle();
-        b.putParcelable("data", model);
+        b.putParcelable("data", mModel);
         dest.writeBundle(b);
+        dest.writeString(mType);
+        dest.writeString(mClassName);
+        dest.writeString(mObjectId);
     }
 
     public static final Creator<SBaseModel> CREATOR = new Creator<SBaseModel>() {

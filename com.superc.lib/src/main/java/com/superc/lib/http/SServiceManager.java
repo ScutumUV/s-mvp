@@ -4,6 +4,8 @@ package com.superc.lib.http;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.superc.lib.util.SUtil;
 import com.superc.lib.util.StringUtils;
 
 import java.io.File;
@@ -18,14 +20,21 @@ import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.BaseUrl;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.GsonConverterFactory;
+import retrofit2.HttpException;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * RetrofitService管理类
@@ -34,7 +43,7 @@ import rx.Observable;
  * <p>
  * 暂无法实现在使用过程中更换BaseUrl
  */
-public class SServiceManager {
+public class SServiceManager implements SHttpService {
 
     /**
      * 服务器地址
@@ -44,7 +53,10 @@ public class SServiceManager {
      *
      */
     private static Retrofit mRetrofit;
-
+    /**
+     * 使用CompositeSubscription来持有所有的Subscriptions
+     */
+    private static CompositeSubscription mCompositeSubscription;
 
     private SServiceManager() {
     }
@@ -166,6 +178,7 @@ public class SServiceManager {
 
         public SServiceManager build() {
             getRetrofit();
+            mCompositeSubscription = new CompositeSubscription();
             return SingleHolder.mInstance;
         }
 
@@ -252,23 +265,97 @@ public class SServiceManager {
         b.build();
     }
 
-    public SServiceManager getManager(){
-        return this;
-    }
-
-    public <T> T create(Class<T> serviceInterface) {
+    @Override
+    public <T> T create(@NonNull Class<T> serviceInterface) {
         return mRetrofit.create(serviceInterface);
     }
 
-    /**
-     * 对 Observable<T> 做统一的处理，处理了线程调度、分割返回结果等操作组合了起来
-     *
-     * @param responseObservable
-     * @param <T>
-     * @return
-     */
-    protected <T> Observable<T> applySchedulers(Observable<T> responseObservable) {
-        return null;
+    @Override
+    public <T> Observable<T> applySchedulers(@NonNull Observable<T> responseObservable) {
+        return responseObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Func1<T, Observable<T>>() {
+                    @Override
+                    public Observable<T> call(T tResponse) {
+                        return flatResponse(tResponse);
+                    }
+                });
+    }
+
+    @Override
+    public <T> Observable<T> flatResponse(@NonNull final T response) {
+        return Observable.create(new Observable.OnSubscribe<T>() {
+
+            @Override
+            public void call(Subscriber<? super T> subscriber) {
+                if (response != null) {
+                    if (!subscriber.isUnsubscribed()) {
+                        subscriber.onNext(response);
+                    }
+                } else {
+                    if (!subscriber.isUnsubscribed()) {
+                        subscriber.onError(new HttpExceptionEntity().setCode("404").setMessage("网络错误，请检查网络设置"));
+                    }
+                    return;
+                }
+                if (!subscriber.isUnsubscribed()) {
+                    subscriber.onCompleted();
+                }
+            }
+        });
+    }
+
+    @Override
+    public <T> Subscriber createNewSubscriber(final SubsCallBack callBack) {
+        return new Subscriber<T>() {
+            @Override
+            public void onCompleted() {
+                callBack.onCompleted();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                if (e != null) {
+                    if (callBack.onError(e) != null && callBack.onError(e)) {
+                        if (e instanceof HttpException) {
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                String json = body.string();
+                                Gson gson = new Gson();
+                                HttpExceptionEntity he = gson.fromJson(json, HttpExceptionEntity.class);
+                                if (he != null && he.getMessage() != null) {
+                                    callBack.onError(he);
+                                }
+                            } catch (IOException IOe) {
+                                IOe.printStackTrace();
+                            }
+                        } else {
+                            callBack.onError(e);
+                        }
+                    } else {
+                        callBack.onError(e);
+                    }
+                } else {
+                    callBack.onError("网络错误，请检查网络设置");
+                }
+            }
+
+            @Override
+            public void onNext(T e) {
+                SUtil.checkNull(mCompositeSubscription, "The CompositeSubscription is null");
+                if (!mCompositeSubscription.isUnsubscribed()) {
+                    callBack.onNext(e);
+                }
+            }
+        };
+    }
+
+    @Override
+    public void unSubscribe() {
+        if (mCompositeSubscription != null) {
+            mCompositeSubscription.unsubscribe();
+        }
     }
 
 

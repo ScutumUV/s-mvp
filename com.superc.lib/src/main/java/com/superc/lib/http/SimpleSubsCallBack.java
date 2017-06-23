@@ -14,7 +14,7 @@ public abstract class SimpleSubsCallBack<C> implements SubsCallBack<C> {
     }
 
     @Override
-    public void onError(Object e) {
-
+    public Boolean onError(Object e) {
+        return true;
     }
 }
