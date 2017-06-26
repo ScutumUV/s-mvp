@@ -2,7 +2,7 @@ package com.superc.lib.presenter;
 
 import com.superc.lib.http.HttpExceptionEntity;
 import com.superc.lib.http.SHttpService;
-import com.superc.lib.http.SServiceManager;
+import com.superc.lib.http.SRXHttp;
 import com.superc.lib.http.SimpleSubsCallBack;
 import com.superc.lib.http.SubsCallBack;
 import com.superc.lib.model.SBaseModel;
@@ -30,7 +30,7 @@ public class SBasePresenterLmp<V extends SView> implements SPresenter {
     public SBasePresenterLmp(V baseView) {
         SUtil.checkNull(baseView, "The BaseView not be null");
         mBaseView = baseView;
-        mHttpManager = new SServiceManager.Builder(mBaseView.getContext()).build();
+        mHttpManager = new SRXHttp.Builder().build();
     }
 
     protected <T> T create(Class<T> serviceInterface) {

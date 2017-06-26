@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.superc.lib.http.SRXHttp;
 import com.superchen.demo.util.CrashHandler;
 
 /**
@@ -21,6 +22,7 @@ public class Application extends android.app.Application {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(getApplicationContext());
         Fresco.initialize(this);
+        SRXHttp.init(this);
     }
 
 }

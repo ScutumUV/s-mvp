@@ -25,7 +25,7 @@ public final class SActivityManager {
      */
     private Stack<Activity> activityStack = null;
 
-    private static SActivityManager manager = null;
+    private volatile static SActivityManager manager = null;
 
     public static SActivityManager getInstance() {
         if (manager == null) {
@@ -131,97 +131,5 @@ public final class SActivityManager {
             }
         }
         activityStack.clear();
-    }
-
-    public void unbindReferences(@NonNull View view) {
-        try {
-            if (view != null) {
-                view.destroyDrawingCache();
-                unbindViewReferences(view);
-                if (view instanceof ViewGroup) {
-                    unbindViewGroupReferences((ViewGroup) view);
-                }
-            }
-        } catch (Throwable e) {
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public void unbindViewReferences(View view) {
-        // set all listeners to null (not every view and not every API level
-        // supports the methods)
-        try {
-            view.setOnClickListener(null);
-            view.setOnCreateContextMenuListener(null);
-            view.setOnFocusChangeListener(null);
-            view.setOnKeyListener(null);
-            view.setOnLongClickListener(null);
-            view.setOnClickListener(null);
-        } catch (Throwable mayHappen) {
-            //todo
-        }
-
-        // set background to null
-        Drawable d = view.getBackground();
-        if (d != null) {
-            d.setCallback(null);
-        }
-
-        if (view instanceof ImageView) {
-            ImageView imageView = (ImageView) view;
-            d = imageView.getDrawable();
-            if (d != null) {
-                d.setCallback(null);
-            }
-            imageView.setImageDrawable(null);
-            imageView.setBackgroundDrawable(null);
-        }
-
-        // destroy WebView
-        if (view instanceof WebView) {
-            WebView webview = (WebView) view;
-            webview.stopLoading();
-            webview.clearFormData();
-            webview.clearDisappearingChildren();
-            webview.setWebChromeClient(null);
-            webview.setWebViewClient(null);
-            webview.destroyDrawingCache();
-            webview.destroy();
-            webview = null;
-        }
-
-        if (view instanceof ListView) {
-            ListView listView = (ListView) view;
-            try {
-                listView.removeAllViewsInLayout();
-            } catch (Throwable mayHappen) {
-            }
-            ((ListView) view).destroyDrawingCache();
-        }
-
-        if (view instanceof RecyclerView) {
-            RecyclerView r = (RecyclerView) view;
-            try {
-                r.removeAllViewsInLayout();
-            } catch (Throwable mayHappen) {
-            }
-            r.destroyDrawingCache();
-        }
-    }
-
-    public void unbindViewGroupReferences(ViewGroup viewGroup) {
-        int nrOfChildren = viewGroup.getChildCount();
-        for (int i = 0; i < nrOfChildren; i++) {
-            View view = viewGroup.getChildAt(i);
-            unbindViewReferences(view);
-            if (view instanceof ViewGroup)
-                unbindViewGroupReferences((ViewGroup) view);
-        }
-        try {
-            viewGroup.removeAllViews();
-        } catch (Throwable mayHappen) {
-            // AdapterViews, ListViews and potentially other ViewGroups don't
-            // support the removeAllViews operation
-        }
     }
 }

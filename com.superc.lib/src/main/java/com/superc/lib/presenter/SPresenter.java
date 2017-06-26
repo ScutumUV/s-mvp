@@ -1,11 +1,12 @@
 package com.superc.lib.presenter;
 
+import com.superc.lib.S;
 import com.superc.lib.ui.SView;
 
 /**
  * Created by superchen on 2017/5/10.
  */
-public interface SPresenter<V extends SView> {
+public interface SPresenter<V extends SView> extends S{
 
     /**
      * 创建 CompositeSubscription 对象 使用CompositeSubscription来持有所有的Subscriptions，

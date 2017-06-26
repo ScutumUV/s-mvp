@@ -2,7 +2,6 @@ package com.superc.lib.http;
 
 import android.support.annotation.NonNull;
 
-import com.superc.lib.model.SModel;
 import com.superc.lib.presenter.SPresenter;
 
 import rx.Observable;
@@ -13,7 +12,7 @@ import rx.Subscriber;
  * <p>
  * dd
  */
-public interface SHttpService extends SPresenter{
+public interface SHttpService extends SPresenter {
 
     /**
      * 创建的访问网络的接口通过Retrofit

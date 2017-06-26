@@ -145,7 +145,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         super.onDestroy();
         if (mActivityManager != null) {
             mActivityManager.removeActivity(this);
-            mActivityManager.unbindReferences(mRootView);
+            SUtil.unbindReferences(mRootView);
         }
         if (mFragmentManager != null) {
             mFragmentManager.destroy();

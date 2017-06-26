@@ -30,7 +30,8 @@ public class LibPresenter1 extends SBasePresenterLmp<ILibContract1.ILibContractV
     @Override
     public void getPublicKey() {
         mBaseView.showLoadingDialog("登录中...");
-        applySchedulers(mHttpManager.create(ApiService.GetPublicKeyService.class).getPublicKeyMethod())
+        applySchedulers(mHttpManager.create(ApiService.GetPublicKeyService.class)
+                .getPublicKeyMethod())
                 .subscribe(createNewSubscriber(new SimpleSubsCallBack<PublicKeyEntity>() {
                     @Override
                     public void onNext(PublicKeyEntity o) {
@@ -45,8 +46,8 @@ public class LibPresenter1 extends SBasePresenterLmp<ILibContract1.ILibContractV
                     }
 
                     @Override
-                    public void onError(Object e) {
-                        super.onError(e);
+                    public Boolean onError(Object e) {
+                        return super.onError(e);
                     }
                 }));
 //        ApiService.GetPublicKeyService get = mHttpManager.create(ApiService.GetPublicKeyService.class);
