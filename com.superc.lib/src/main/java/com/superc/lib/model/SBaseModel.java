@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.Gson;
+import com.zhouyou.http.model.ApiResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ import java.util.Map;
 /**
  * Created by superchen on 2017/5/16.
  */
-public class SBaseModel<T> implements SModel, Parcelable, Serializable {
+public class SBaseModel<T> extends ApiResult implements Parcelable, Serializable {
 
     private static final long serialVersionUID = 6109859576148233150L;
     public static final String TYPE = "SBaseModel";
@@ -44,26 +45,6 @@ public class SBaseModel<T> implements SModel, Parcelable, Serializable {
     @Override
     public SBaseModel getData() {
         return this;
-    }
-
-    @Override
-    public void setModel(SBaseModel sBaseModel) {
-
-    }
-
-    @Override
-    public void addData() {
-
-    }
-
-    @Override
-    public void updateData() {
-
-    }
-
-    @Override
-    public void deleteData() {
-
     }
 
     /**

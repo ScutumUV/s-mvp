@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="MainListDatas">
-        <item>OKHttp Test</item>
         <item>AIDL Test</item>
         <item>RXJava Test</item>
         <item>Fresco Test</item>
         <item>Lib Test</item>
+        <item>Blue Tooth Test</item>
+        <item>Photo Select Test</item>
     </array>
 </resources>

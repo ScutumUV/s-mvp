@@ -10,8 +10,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!--扫描设备或操作蓝牙设置-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!--当feature的设置为true时，只能在支持BLE的安卓设备上安装运行该APP-->
+    <!--当feature的设置为false时，则所有安卓设备上都能安装运行该APP-->
+    <!--<uses-feature-->
+        <!--android:name="android.hardware.bluetooth_le"-->
+        <!--android:required="false" />-->
+
 
     <application
         android:name=".application.Application"
@@ -26,8 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.TestOKHttpActivity" />
-        <activity android:name=".activity.TestRetrofitActivity" />
         <activity android:name=".activity.TestAIDLActivity" />
         <activity android:name=".activity.TestRXJavaActivity" />
         <activity android:name=".activity.TestFrescoActivity" />
@@ -35,7 +44,9 @@
         <!-- <service -->
         <!-- android:name=".service.TestAIDLService" -->
         <!-- android:process="TestAIDLProcess" /> -->
-        <activity android:name=".activity.TestLibActivity"></activity>
+        <activity android:name=".activity.TestLibActivity" />
+        <activity android:name=".activity.TestBlueToothActivity" />
+        <activity android:name=".activity.TestSelectPhotoActivity" />
     </application>
 
 </manifest>

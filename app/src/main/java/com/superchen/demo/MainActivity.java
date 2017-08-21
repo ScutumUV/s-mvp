@@ -7,10 +7,11 @@ import android.widget.AdapterView;
 
 import com.superc.lib.ui.activity.SActivity;
 import com.superchen.demo.activity.TestAIDLActivity;
+import com.superchen.demo.activity.TestBlueToothActivity;
 import com.superchen.demo.activity.TestFrescoActivity;
 import com.superchen.demo.activity.TestLibActivity;
-import com.superchen.demo.activity.TestOKHttpActivity;
 import com.superchen.demo.activity.TestRXJavaActivity;
+import com.superchen.demo.activity.TestSelectPhotoActivity;
 import com.superchen.demo.adapter.MainAdapter;
 
 import butterknife.BindView;
@@ -44,19 +45,22 @@ public class MainActivity extends SActivity implements AdapterView.OnItemClickLi
         Class o = null;
         switch (position) {
             case 0:
-                o = TestOKHttpActivity.class;
-                break;
-            case 1:
                 o = TestAIDLActivity.class;
                 break;
-            case 2:
+            case 1:
                 o = TestRXJavaActivity.class;
                 break;
-            case 3:
+            case 2:
                 o = TestFrescoActivity.class;
                 break;
-            case 4:
+            case 3:
                 o = TestLibActivity.class;
+                break;
+            case 4:
+                o = TestBlueToothActivity.class;
+                break;
+            case 5:
+                o = TestSelectPhotoActivity.class;
                 break;
         }
         if (o != null) {

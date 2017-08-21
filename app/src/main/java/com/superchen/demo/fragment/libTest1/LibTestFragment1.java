@@ -2,15 +2,18 @@ package com.superchen.demo.fragment.libTest1;
 
 import android.content.Context;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 
 import com.superc.lib.ui.fragment.SFragment;
+import com.superc.lib.widget.recyclerview.RRecyclerView;
 import com.superchen.demo.R;
-import com.superchen.demo.fragment.libTest2.LibTestFragment2;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.OnClick;
 
@@ -18,6 +21,8 @@ public class LibTestFragment1 extends SFragment<ILibContract1.ILibContractPresen
 
     @BindViews({R.id.lib_test_et_name, R.id.lib_test_et_pd})
     List<TextInputEditText> etLists;
+    @BindView(R.id.test_r_recyclerview)
+    RRecyclerView recyclerView;
 
     public LibTestFragment1() {
     }
@@ -57,6 +62,22 @@ public class LibTestFragment1 extends SFragment<ILibContract1.ILibContractPresen
     @Override
     protected void initViews(View view) {
         createPresenter(new LibPresenter1(this));
+//        recyclerView.setPullRefreshEnable(false);
+//        recyclerView.setLoadMoreEnable(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        String[] d = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        List<String> mDatas = new ArrayList<>();
+        List<Integer> mImgDatas = new ArrayList<>();
+        for (int i = 0; i < d.length; i++) {
+            if (i % 2 == 0) {
+                mDatas.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1502082443672&di=5550eaf3f60e9f9203e9c8fea2db12e7&imgtype=0&src=http%3A%2F%2Fimg17.3lian.com%2Fd%2Ffile%2F201702%2F22%2F1005a2e0825ffe290b3f697404ee8038.jpg");
+            } else {
+                mDatas.add(d[i]);
+            }
+        }
+        recyclerView.setAdapter(new TestRRecyclerViewAdapter1(getContext(), mDatas));
+        recyclerView.setNoMoreData(true);
     }
 
     @Override
@@ -100,8 +121,6 @@ public class LibTestFragment1 extends SFragment<ILibContract1.ILibContractPresen
 
     @Override
     public void success() {
-        showToastShort("登录成功");
-        addFragmentNoAnimation(LibTestFragment2.newInstance(), R.id.lib_test_container);
     }
 
     @Override
@@ -117,4 +136,5 @@ public class LibTestFragment1 extends SFragment<ILibContract1.ILibContractPresen
                 break;
         }
     }
+
 }

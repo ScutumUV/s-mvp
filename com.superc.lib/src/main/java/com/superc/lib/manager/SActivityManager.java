@@ -67,20 +67,8 @@ public final class SActivityManager {
      */
     public void finishActivity(@NonNull Activity a) {
         SUtil.checkNull(activityStack, "The ActivityManager's activityStack is null, please check it");
-        int index = 0;
-        for (int i = activityStack.size() - 1; i >= 0; i--) {
-            if (activityStack.get(i) == a) {
-                index = i;
-                break;
-            }
-        }
-        for (int i = activityStack.size() - 1; i >= index; i--) {
-            Activity t = activityStack.get(i);
-            if (t != null && !t.isFinishing()) {
-                t.finish();
-                activityStack.remove(t);
-            }
-        }
+        a.finish();
+        activityStack.remove(a);
     }
 
     /**
@@ -104,18 +92,9 @@ public final class SActivityManager {
             Activity a = activityStack.get(i);
             if (a != null && !a.isFinishing()) {
                 a.finish();
+                activityStack.remove(a);
             }
         }
-    }
-
-    /**
-     * 从自定义的ActivityManager中移除a
-     *
-     * @param a 需要销毁的activity
-     */
-    public void removeActivity(@NonNull Activity a) {
-        SUtil.checkNull(activityStack, "The ActivityManager's activityStack is null, please check it");
-        activityStack.remove(a);
     }
 
     /**

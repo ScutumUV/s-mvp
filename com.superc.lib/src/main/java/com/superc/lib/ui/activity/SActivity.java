@@ -11,29 +11,29 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 
+import com.superc.lib.R;
 import com.superc.lib.manager.SActivityManager;
 import com.superc.lib.manager.SFragmentManager;
 import com.superc.lib.presenter.SPresenter;
-import com.superc.lib.ui.SView;
 import com.superc.lib.ui.fragment.SFragment;
-import com.superc.lib.util.SUtil;
 import com.superc.lib.util.DialogUtil;
+import com.superc.lib.util.LogUtils;
+import com.superc.lib.util.SUtil;
+import com.superc.lib.util.StatusBarCompatUtil;
 import com.superc.lib.util.StringUtils;
 import com.superc.lib.util.ToastUtil;
 
 import butterknife.ButterKnife;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * BaseActivity create by SuperChen
  */
-public abstract class SActivity<P extends SPresenter> extends AppCompatActivity implements SView {
+public abstract class SActivity<P extends SPresenter> extends AppCompatActivity {
 
     protected String TAG;
     /**
@@ -55,44 +55,43 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
     /**
      * 使用CompositeSubscription来持有所有的Subscriptions
      */
-    protected CompositeSubscription mCompositeSubscription;
+//    protected CompositeSubscription mCompositeSubscription;
 
     protected P presenter;
-
+    /**
+     * 根布局
+     */
     protected View mRootView;
+    /**
+     * 是否使用沉浸式状态栏
+     */
+    protected boolean mUseImmersionStatusBar = true;
 
     /**
      * @return 设置继承 BaseActivity的子Activity的布局Id
      */
-    @LayoutRes
-    protected abstract int setLayoutResId();
+    protected abstract @LayoutRes
+    int setLayoutResId();
 
     /**
      * 初始化
      */
     protected abstract void initViews();
 
+    protected void initTitleBar() {
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (setLayoutResId() == NONE_VALUE) {
+        if (setLayoutResId() == NONE_VALUE || setLayoutResId() == 0) {
             throw new IllegalArgumentException("The activity's layout id not be null");
         }
+        if (mUseImmersionStatusBar) {
+            StatusBarCompatUtil.compat(this);
+        }
         setContentView(setLayoutResId());
-    }
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        View view = LayoutInflater.from(this).inflate(layoutResID, null);
-        setContentView(view);
-    }
-
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        mRootView = view;
-        init();
-        initViews();
+        init(savedInstanceState);
     }
 
     @Override
@@ -125,6 +124,10 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         super.onSaveInstanceState(outState);
     }
 
+    protected void onOutInstanceState(Bundle savedInstanceState) {
+
+    }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -144,7 +147,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
     protected void onDestroy() {
         super.onDestroy();
         if (mActivityManager != null) {
-            mActivityManager.removeActivity(this);
+            mActivityManager.finishActivity(this);
             SUtil.unbindReferences(mRootView);
         }
         if (mFragmentManager != null) {
@@ -152,13 +155,13 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
             mFragmentManager = null;
         }
         mRootView = null;
-        if (mCompositeSubscription != null) {
-            mCompositeSubscription.unsubscribe();
-        }
-        //解绑 presenter
-        if (presenter != null) {
-            presenter.unSubscribe();
-        }
+//        if (mCompositeSubscription != null) {
+//            mCompositeSubscription.unsubscribe();
+//        }
+//        //解绑 presenter
+//        if (presenter != null) {
+//            presenter.unSubscribe();
+//        }
     }
 
     @Override
@@ -183,7 +186,6 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
     public void showToastShort(@NonNull String msg) {
         if (StringUtils.isEmpty(msg)) {
             return;
@@ -191,7 +193,6 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         ToastUtil.show(this, msg);
     }
 
-    @Override
     public void showToastLong(@NonNull String msg) {
         if (StringUtils.isEmpty(msg)) {
             return;
@@ -199,41 +200,34 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         ToastUtil.show(this, msg);
     }
 
-    @Override
     public void showLoadingDialog(String loadingReminderText) {
         initLoadingDialog();
         progressDialog.setMessage(loadingReminderText);
         progressDialog.show();
     }
 
-    @Override
     public void hideLoadingDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
-    @Override
     public void showEmptyView() {
     }
 
-    @Override
     public void showError() {
     }
 
-    @Override
     public void showLog(String msg) {
-        Log.i(TAG, msg);
+        LogUtils.i(TAG, msg);
     }
 
-    @Override
     public Context getContext() {
         return this;
     }
 
-    @Override
-    public void setPresenter(SPresenter presenter) {
-        createNewPresenter((P) presenter);
+    public void setPresenter(P presenter) {
+        createNewPresenter(presenter);
     }
 
     protected void createNewPresenter(P presenter) {
@@ -246,7 +240,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      *
      * @param cls Activity的Class
      */
-    protected void startActivity(@NonNull Class<Activity> cls) {
+    public <T extends Activity> void startActivity(@NonNull Class<T> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
@@ -257,7 +251,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      *
      * @param cls Activity的Class
      */
-    protected void startActivity(@NonNull Class<Activity> cls, Bundle b) {
+    public <T extends Activity> void startActivity(@NonNull Class<T> cls, Bundle b) {
         Intent intent = new Intent(this, cls);
         if (b != null) {
             intent.putExtras(b);
@@ -271,7 +265,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param cls        Activity的Class
      * @param resultCode 返回码
      */
-    protected void startActivityForResult(@NonNull Class<Activity> cls, int resultCode) {
+    public <T extends Activity> void startActivityForResult(@NonNull Class<T> cls, int resultCode) {
         Intent intent = new Intent(this, cls);
         startActivityForResult(intent, resultCode);
     }
@@ -283,7 +277,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param b          数据
      * @param resultCode 返回码
      */
-    protected void startActivityForResult(@NonNull Class<Activity> cls, Bundle b, int resultCode) {
+    public <T extends Activity> void startActivityForResult(@NonNull Class<T> cls, Bundle b, int resultCode) {
         Intent intent = new Intent(this, cls);
         if (b != null) {
             intent.putExtras(b);
@@ -301,9 +295,18 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
     }
 
     /**
+     * 结束某个Activity，并通知ActivityManager进行改变
+     */
+    public void finishActivity(@NonNull Activity activity) {
+        if (mActivityManager != null) {
+            mActivityManager.finishActivity(activity);
+        }
+    }
+
+    /**
      * 结束当前Application所有的activity
      */
-    protected void finishAllActivity() {
+    public void finishAllActivity() {
         if (mActivityManager != null) {
             mActivityManager.clearAllActivities();
         }
@@ -313,7 +316,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * 在当前activity无动画 加载 一个fragment
      *
      * @param fragment    需要加载的fragment
-     * @param containerId 加载framgent的ViewId
+     * @param containerId 加载fragment的ViewId
      */
     protected void addFragmentNoAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
         initFragmentManager();
@@ -364,7 +367,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * 在当前activity默认动画(右进左出) 替换 一个fragment
      *
      * @param fragment    需要加载的fragment
-     * @param containerId 加载framgent的ViewId
+     * @param containerId 加载fragment的ViewId
      */
     protected void replaceFragmentNormalAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
         initFragmentManager();
@@ -389,6 +392,26 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
     }
 
     /**
+     * 在当前activity无动画 加载 一个fragment
+     *
+     * @param fragment 需要加载的fragment
+     */
+    protected void showAndHideFragmentNoAnimation(@NonNull SFragment fragment, SFragment... hideFragments) {
+        initFragmentManager();
+        mFragmentManager.showAndHideFragmentNoAnimation(fragment, hideFragments);
+    }
+
+    protected void hideFragment(SFragment... hideFragments) {
+        initFragmentManager();
+        mFragmentManager.hideFragment(hideFragments);
+    }
+
+    protected void showFragment(@NonNull SFragment fragment) {
+        initFragmentManager();
+        mFragmentManager.showFragment(fragment);
+    }
+
+    /**
      * 根据需要返回的fragment的名称来对当前activity中的所有fragment进行回退，
      * 有，则回退到需要返回的fragment名称对应的fragment的实例
      * 无，则直接返回
@@ -408,14 +431,20 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         mFragmentManager.goBack();
     }
 
-    private void init() {
+    private void init(Bundle saveInstanceState) {
         initActivityManager();
         mActivityManager.addActivity(this);
+        mRootView = getWindow().getDecorView();
         //创建 CompositeSubscription 对象 使用CompositeSubscription来持有所有的Subscriptions，
         // 然后在onDestroy()或者onDestroyView()里取消所有的订阅。
-        mCompositeSubscription = new CompositeSubscription();
-        ButterKnife.bind(this);
+//        mCompositeSubscription = new CompositeSubscription();
         TAG = getClass().getSimpleName();
+        ButterKnife.bind(this);
+        if (saveInstanceState != null) {
+            onOutInstanceState(saveInstanceState);
+        }
+        initTitleBar();
+        initViews();
     }
 
     private void initActivityManager() {
@@ -447,11 +476,11 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         return mFragmentManager.getFragmentManager();
     }
 
-    public CompositeSubscription getCompositeSubscription() {
-        if (mCompositeSubscription == null) {
-            mCompositeSubscription = new CompositeSubscription();
-        }
-        return mCompositeSubscription;
-    }
+//    public CompositeSubscription getCompositeSubscription() {
+//        if (mCompositeSubscription == null) {
+//            mCompositeSubscription = new CompositeSubscription();
+//        }
+//        return mCompositeSubscription;
+//    }
 
 }

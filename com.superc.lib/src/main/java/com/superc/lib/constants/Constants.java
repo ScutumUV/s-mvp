@@ -12,6 +12,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Constants {
 
+    public static final int NO_VALUE = -1;
+
     public static class FileConstants {
 
         public static String ROOT_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() +

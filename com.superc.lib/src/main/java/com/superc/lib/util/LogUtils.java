@@ -2,6 +2,7 @@ package com.superc.lib.util;
 
 import android.annotation.SuppressLint;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -101,8 +102,18 @@ public class LogUtils {
         }
     }
 
-    public static void d(String content, Throwable tr) {
-        if (!allowD)
+    public static void d(@NonNull String tag, String content) {
+        if (!allowD || StringUtils.isEmpty(content))
+            return;
+        if (customLogger != null) {
+            customLogger.d(tag, content);
+        } else {
+            Log.d(tag, content);
+        }
+    }
+
+    public static void d(String content, @NonNull Throwable tr) {
+        if (!allowD || StringUtils.isEmpty(content))
             return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
@@ -126,6 +137,20 @@ public class LogUtils {
         }
         if (isSaveLog) {
             point(PATH_LOG_INFO, tag, e.getMessage());
+        }
+    }
+
+    public static void e(String tag, String content) {
+        if (!allowE || StringUtils.isEmpty(content) || StringUtils.isEmpty(tag))
+            return;
+
+        if (customLogger != null) {
+            customLogger.e(tag, content);
+        } else {
+            Log.e(tag, content);
+        }
+        if (isSaveLog) {
+            point(PATH_LOG_INFO, tag, content);
         }
     }
 
@@ -175,6 +200,17 @@ public class LogUtils {
 
     }
 
+    public static void i(String tag, String content) {
+        if (!allowI || StringUtils.isEmpty(tag) || StringUtils.isEmpty(content))
+            return;
+
+        if (customLogger != null) {
+            customLogger.i(tag, content);
+        } else {
+            Log.i(tag, content);
+        }
+    }
+
     public static void i(String content, Throwable tr) {
         if (!allowI)
             return;
@@ -186,7 +222,6 @@ public class LogUtils {
         } else {
             Log.i(tag, content, tr);
         }
-
     }
 
     public static void v(String content) {
@@ -220,6 +255,17 @@ public class LogUtils {
             return;
         StackTraceElement caller = getCallerStackTraceElement();
         String tag = generateTag(caller);
+
+        if (customLogger != null) {
+            customLogger.w(tag, content);
+        } else {
+            Log.w(tag, content);
+        }
+    }
+
+    public static void w(String tag, String content) {
+        if (!allowI || StringUtils.isEmpty(tag) || StringUtils.isEmpty(content))
+            return;
 
         if (customLogger != null) {
             customLogger.w(tag, content);

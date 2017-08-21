@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,42 +39,51 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
 
     public T presenter;
 
+    protected boolean isActive = false;
+
 
     @LayoutRes
     protected abstract int setLayoutId();
 
     protected abstract void initViews(View view);
 
+    protected void initTitleBar(View view) {
+    }
+
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mFragmentManager = SFragmentManager.getInstance((AppCompatActivity) getActivity());
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isActive = true;
+        mFragmentManager = SFragmentManager.getInstance((AppCompatActivity) getActivity());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (setLayoutId() == SActivity.NONE_VALUE) {
+        if (setLayoutId() == SActivity.NONE_VALUE || setLayoutId() == 0) {
             throw new IllegalArgumentException("The fragment's layout id not be null");
         }
         rootView = inflater.inflate(setLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
         TAG = getClass().getSimpleName();
+        initTitleBar(rootView);
         initViews(rootView);
         return rootView;
     }
 
-    /**
-     * 创建相应的 presenter
-     */
-    public void createPresenter(T presenter) {
-        SUtil.checkNull(presenter, "The presenter not be null");
-        this.presenter = presenter;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -86,13 +97,32 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onStop() {
+        super.onStop();
+        isActive = false;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //解绑 presenter
+        if (presenter != null) {
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -106,12 +136,16 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //解绑 presenter
-        if (presenter != null) {
-            presenter.unSubscribe();
-        }
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
+     * 创建相应的 presenter
+     */
+    public void createPresenter(T presenter) {
+        SUtil.checkNull(presenter, "The presenter not be null");
+        this.presenter = presenter;
     }
 
     /**
@@ -157,28 +191,61 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
         return mFragmentManager.getHoldingActivity();
     }
 
-    protected void showLoadingDialog(String message) {
-        checkHoldingActivity();
-        ((SActivity) getHoldingActivity()).showLoadingDialog(message);
+    /**
+     * 跳转另外的Activity
+     *
+     * @param cls Activity的Class
+     */
+    public <T extends Activity> void startActivity(Class<T> cls) {
+        if (getHoldingActivity() != null && (getHoldingActivity() instanceof SActivity)) {
+            SActivity s = (SActivity) getHoldingActivity();
+            s.startActivity(cls);
+        }
     }
 
-    protected void hideLoadingDialog() {
-        checkHoldingActivity();
-        ((SActivity) getHoldingActivity()).hideLoadingDialog();
+    /**
+     * 带数据跳转另外的Activity
+     *
+     * @param cls Activity的Class
+     * @param b   数据
+     */
+    public <T extends Activity> void startActivity(Class<T> cls, Bundle b) {
+        if (getHoldingActivity() != null && (getHoldingActivity() instanceof SActivity)) {
+            SActivity s = (SActivity) getHoldingActivity();
+            s.startActivity(cls, b);
+        }
     }
 
-    protected void showToastShort(String msg) {
-        checkHoldingActivity();
-        ((SActivity) getHoldingActivity()).showToastShort(msg);
+    /**
+     * ActivityForResult
+     *
+     * @param cls        Activity的Class
+     * @param resultCode 返回码
+     */
+    public <T extends Activity> void startActivityForResult(@NonNull Class<T> cls, int resultCode) {
+        if (getHoldingActivity() != null && (getHoldingActivity() instanceof SActivity)) {
+            SActivity s = (SActivity) getHoldingActivity();
+            Intent intent = new Intent(s, cls);
+            startActivityForResult(intent, resultCode);
+        }
     }
 
-    protected void showToastLong(String msg) {
-        checkHoldingActivity();
-        ((SActivity) getHoldingActivity()).showToastLong(msg);
-    }
-
-    protected void showLog(String msg) {
-        Log.i(TAG, msg);
+    /**
+     * 带数据传递的ActivityForResult
+     *
+     * @param cls        Activity的Class
+     * @param b          数据
+     * @param resultCode 返回码
+     */
+    public <T extends Activity> void startActivityForResult(@NonNull Class<T> cls, Bundle b, int resultCode) {
+        if (getHoldingActivity() != null && (getHoldingActivity() instanceof SActivity)) {
+            SActivity s = (SActivity) getHoldingActivity();
+            Intent intent = new Intent(s, cls);
+            if (b != null) {
+                intent.putExtras(b);
+            }
+            startActivityForResult(intent, resultCode);
+        }
     }
 
     /**
@@ -277,6 +344,38 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
         if (!(ac instanceof SActivity)) {
             throw new IllegalArgumentException("The holding activity must be BaseActivity");
         }
+    }
+
+    public void showLoadingDialog(String message) {
+        checkHoldingActivity();
+        ((SActivity) getHoldingActivity()).showLoadingDialog(message);
+    }
+
+    public void hideLoadingDialog() {
+        checkHoldingActivity();
+        ((SActivity) getHoldingActivity()).hideLoadingDialog();
+    }
+
+    public void showToastShort(String msg) {
+        checkHoldingActivity();
+        ((SActivity) getHoldingActivity()).showToastShort(msg);
+    }
+
+    public void showToastLong(String msg) {
+        checkHoldingActivity();
+        ((SActivity) getHoldingActivity()).showToastLong(msg);
+    }
+
+    public void showLog(String msg) {
+        Log.i(TAG, msg);
+    }
+
+    public void showError() {
+
+    }
+
+    public void showEmptyView() {
+
     }
 
 }

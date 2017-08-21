@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:background="#a0ffffff" >
+
+    <ListView
+        android:id="@+id/id_list_dirs"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="#EEE3D9"
+        android:background="#a0ffffff"
+        android:dividerHeight="1px" >
+    </ListView>
+
+</LinearLayout>

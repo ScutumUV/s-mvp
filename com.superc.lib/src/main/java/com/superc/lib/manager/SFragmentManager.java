@@ -27,7 +27,7 @@ import static com.superc.lib.ui.activity.SActivity.NONE_VALUE;
  * 暂不支持，在activity A中加载多个fragment后，从A跳入activity B后B再加载多个fragment，
  * 会抛出异常，若需要如此，可以考虑不使用单例模式，同时不适用static字段
  */
-public final class SFragmentManager<T> {
+public final class SFragmentManager<T extends AppCompatActivity> {
 
     /**
      * Fragment的栈
@@ -296,6 +296,58 @@ public final class SFragmentManager<T> {
         t.commitAllowingStateLoss();
         startPopFragmentLifeCycle(false);
     }
+
+    /**
+     * 在当前activity无动画 加载 一个fragment
+     *
+     * @param fragment 需要加载的fragment
+     */
+    public void showAndHideFragmentNoAnimation(@NonNull SFragment fragment, SFragment... hideFragments) {
+        mLastFragment = fragment;
+        initFragmentManager();
+        FragmentTransaction t = fm.beginTransaction();
+        t.show(fragment);
+        if (hideFragments != null) {
+            for (SFragment f : hideFragments) {
+                if (f != null) {
+                    t.hide(f);
+                }
+            }
+        }
+        t.commitAllowingStateLoss();
+        startPopFragmentLifeCycle(false);
+    }
+
+    /**
+     * 在当前activity无动画 加载 一个fragment
+     */
+    public void hideFragment(SFragment... hideFragments) {
+        initFragmentManager();
+        FragmentTransaction t = fm.beginTransaction();
+        if (hideFragments != null) {
+            for (SFragment f : hideFragments) {
+                if (f != null) {
+                    t.hide(f);
+                }
+            }
+        }
+        t.commitAllowingStateLoss();
+        startPopFragmentLifeCycle(false);
+    }
+
+    /**
+     * 在当前activity无动画 加载 一个fragment
+     */
+    public void showFragment(@NonNull SFragment fragment) {
+        mLastFragment = fragment;
+        initFragmentManager();
+        FragmentTransaction t = fm.beginTransaction();
+        addFragmentToStack(fragment);
+        t.show(fragment);
+        t.commitAllowingStateLoss();
+        startPopFragmentLifeCycle(false);
+    }
+
 
     /**
      * 直接对当前activity中的fragment进行回退，即返回上一个fragment

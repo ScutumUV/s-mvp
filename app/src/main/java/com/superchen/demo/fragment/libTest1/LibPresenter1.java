@@ -1,11 +1,8 @@
 package com.superchen.demo.fragment.libTest1;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.superc.lib.http.SimpleSubsCallBack;
 import com.superc.lib.presenter.SBasePresenterLmp;
-import com.superchen.demo.url.ApiService;
 import com.superchen.demo.util.Base64Utils;
 import com.superchen.demo.util.RSAUtils;
 
@@ -27,83 +24,6 @@ public class LibPresenter1 extends SBasePresenterLmp<ILibContract1.ILibContractV
         super(baseView);
     }
 
-    @Override
-    public void getPublicKey() {
-        mBaseView.showLoadingDialog("登录中...");
-        applySchedulers(mHttpManager.create(ApiService.GetPublicKeyService.class)
-                .getPublicKeyMethod())
-                .subscribe(createNewSubscriber(new SimpleSubsCallBack<PublicKeyEntity>() {
-                    @Override
-                    public void onNext(PublicKeyEntity o) {
-                        pwd = RSAJiaMi(o.getData().getPublicKey(), pwd);//RSA加密
-                        login();
-                    }
-
-                    @Override
-                    public void onCompleted() {
-                        super.onCompleted();
-
-                    }
-
-                    @Override
-                    public Boolean onError(Object e) {
-                        return super.onError(e);
-                    }
-                }));
-//        ApiService.GetPublicKeyService get = mHttpManager.create(ApiService.GetPublicKeyService.class);
-//        get
-//                .getPublicKeyMethod()
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(createNewSubscriber(new SimpleSubsCallBack<PublicKeyEntity>() {
-//                    @Override
-//                    public void onNext(PublicKeyEntity o) {
-//                        mBaseView.showToastShort(o.toString());
-//                    }
-//
-//                    @Override
-//                    public void onCompleted() {
-//                        super.onCompleted();
-//                        mBaseView.showToastShort("获取数据获取数据成功");
-//                    }
-//
-//                    @Override
-//                    public void onError(Object e) {
-//                        super.onError(e);
-//                    }
-//                }));
-//        get
-//                .getPublicKeyMethod()
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<PublicKeyEntity>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        mBaseView.showLog("获取数据获取数据成功");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        mBaseView.showLog("获取数据失败 + e :" + e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(PublicKeyEntity model) {
-//                        mBaseView.showLog(model.toString());
-//                    }
-//                });
-    }
-
-    @Override
-    public void login() {
-        applySchedulers(mHttpManager.create(ApiService.Login.class).login(un, pwd))
-                .subscribe(createNewSubscriber(new SimpleSubsCallBack<Object>() {
-                    @Override
-                    public void onNext(Object o) {
-                        Log.i("msgg", "login =======> s :" + o.toString());
-                        mBaseView.success();
-                    }
-                }));
-    }
-
     /**
      * RSA加密
      */
@@ -122,4 +42,13 @@ public class LibPresenter1 extends SBasePresenterLmp<ILibContract1.ILibContractV
         }
     }
 
+    @Override
+    public void getPublicKey() {
+
+    }
+
+    @Override
+    public void login() {
+
+    }
 }

@@ -1,6 +1,19 @@
 <resources>
+
     <string name="app_name">SupesrLib</string>
     <string name="dialog_positive">确定</string>
     <string name="dialog_negative">取消</string>
     <string name="warm_reminder">温馨提示</string>
+
+    <string name="header_state_hint_normal">下拉刷新</string>
+    <string name="header_state_ready">释放立即刷新</string>
+    <string name="header_state_refreshing">正在刷新</string>
+    <string name="header_state_refresh_done">刷新成功</string>
+    <string name="header_state_net_error">网络请求出错</string>
+    <string name="header_state_no_net">无网络连接</string>
+    <string name="header_refresh_last_time">上次更新时间：</string>
+    <string name="footer_state_success">加载成功</string>
+    <string name="footer_state_loading">正在加载&#8230;</string>
+    <string name="footer_state_no_more_data">已显示全部内容</string>
+
 </resources>

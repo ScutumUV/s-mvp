@@ -33,7 +33,7 @@ public class TestLibActivity extends SActivity {
                 if (i == 0) {
                     addFragmentNoAnimation(LibTestFragment1.newInstance(), R.id.lib_test_container);
                 } else if (i == 1) {
-                    addFragmentNoAnimation(LibTestFragment2.newInstance(), R.id.lib_test_container);
+                    addFragmentNormalAnimation(LibTestFragment2.newInstance(), R.id.lib_test_container);
                 }
                 if (i > 1) {
                     i = 1;
@@ -46,4 +46,5 @@ public class TestLibActivity extends SActivity {
                 break;
         }
     }
+
 }

@@ -1,17 +1,19 @@
 package com.superc.lib.presenter;
 
-import com.superc.lib.http.HttpExceptionEntity;
-import com.superc.lib.http.SHttpService;
-import com.superc.lib.http.SRXHttp;
-import com.superc.lib.http.SimpleSubsCallBack;
-import com.superc.lib.http.SubsCallBack;
 import com.superc.lib.model.SBaseModel;
 import com.superc.lib.ui.SView;
 import com.superc.lib.util.SUtil;
-import com.superc.lib.util.StringUtils;
+import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.callback.CallBack;
+import com.zhouyou.http.callback.CallBackProxy;
+import com.zhouyou.http.callback.CallClazzProxy;
+import com.zhouyou.http.model.ApiResult;
 
-import rx.Observable;
-import rx.Subscriber;
+import java.lang.reflect.Type;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * Created by superchen on 2017/5/16.
@@ -20,79 +22,64 @@ import rx.Subscriber;
  */
 public class SBasePresenterLmp<V extends SView> implements SPresenter {
 
-    protected V mBaseView;
+    protected V mView;
 
     protected SBaseModel mModel;
 
-    protected SHttpService mHttpManager;
-
-
-    public SBasePresenterLmp(V baseView) {
-        SUtil.checkNull(baseView, "The BaseView not be null");
-        mBaseView = baseView;
-        mHttpManager = new SRXHttp.Builder().build();
+    public SBasePresenterLmp(V mView) {
+        SUtil.checkNull(mView, "The PresenterLmpView not be null");
+        this.mView = mView;
     }
 
-    protected <T> T create(Class<T> serviceInterface) {
-        return mHttpManager.create(serviceInterface);
+    protected <T> Observable get(String url, Class<T> clazz) {
+        return EasyHttp.get(url).execute(clazz);
     }
 
-    protected <T> Observable<T> applySchedulers(Observable<T> responseObservable) {
-        return mHttpManager.applySchedulers(responseObservable);
-    }
-
-    protected <T> Observable<T> flatResponse(final T response) {
-        return mHttpManager.flatResponse(response);
-    }
-
-    protected <T> Subscriber createNewSubscriber(final SimpleSubsCallBack callBack) {
-        return mHttpManager.createNewSubscriber(new SubsCallBack<T>() {
-            @Override
-            public void onCompleted() {
-                if (mBaseView != null) {
-                    mBaseView.hideLoadingDialog();
-                }
-                callBack.onCompleted();
-            }
-
-            @Override
-            public void onNext(T t) {
-                callBack.onNext(t);
-            }
-
-            @Override
-            public Boolean onError(Object e) {
-                if (mBaseView != null) {
-                    mBaseView.hideLoadingDialog();
-                }
-                if (callBack.onError(e) != null && callBack.onError(e)) {
-                    if (e instanceof HttpExceptionEntity) {
-                        HttpExceptionEntity t = (HttpExceptionEntity) e;
-                        if (!StringUtils.isEmpty(t.getMessage())) {
-                            mBaseView.showToastShort(t.getMessage());
-                        }
-                    } else {
-                        callBack.onError(e);
-                    }
-                } else {
-                    callBack.onError(e);
-                }
-                return callBack.onError(e);
-            }
+    public <T> Disposable get(String url, CallBack<T> callBack) {
+        return EasyHttp.get(url).execute(new CallBackProxy<ApiResult<T>, T>(callBack) {
         });
     }
 
+    public <T> Disposable get(String url, CallBackProxy<? extends ApiResult<T>, T> proxy) {
+        return EasyHttp.get(url).execute(proxy);
+    }
+
+    public <T> Observable get(String url, Type type) {
+        return EasyHttp.get(url).execute(new CallClazzProxy<ApiResult<T>, T>(type) {
+        });
+    }
+
+    protected <T> Observable post(String url, Class<T> clazz) {
+        return EasyHttp.post(url).execute(clazz);
+    }
+
+    protected <T> Observable post(String url, Type type) {
+        return EasyHttp.post(url).execute(type);
+    }
+
+    protected <T> Observable post(String url, CallClazzProxy<? extends ApiResult<T>, T> proxy) {
+        return EasyHttp.post(url).execute(proxy);
+    }
+
+    protected <T> Disposable post(String url, CallBack<T> callBack) {
+        return EasyHttp.post(url).execute(callBack);
+    }
+
+    protected <T> Disposable post(String url, CallBackProxy<? extends ApiResult<T>, T> proxy) {
+        return EasyHttp.post(url).execute(proxy);
+    }
+
+    protected <T> Disposable delete(String url, CallBack<T> callBack) {
+        return EasyHttp.delete(url).execute(callBack);
+    }
+
+    protected <T> Disposable delete(String url, CallBackProxy<? extends ApiResult<T>, T> proxy) {
+        return EasyHttp.delete(url).execute(proxy);
+    }
+
     @Override
-    public void unSubscribe() {
-        mHttpManager.unSubscribe();
+    public void unSubscribe(Disposable subscriber) {
+//        EasyHttp.cancelDisposable(subscriber);
     }
 
-    public void back() {
-
-    }
-
-
-    public void back(String className) {
-
-    }
 }

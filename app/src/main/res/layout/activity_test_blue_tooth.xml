@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/this_phone_blue_tooth_ip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本机蓝牙地址："
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/start_search_blut_tooth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="点击搜索周边蓝牙" />
+
+    <ListView
+        android:id="@+id/blue_tooth_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

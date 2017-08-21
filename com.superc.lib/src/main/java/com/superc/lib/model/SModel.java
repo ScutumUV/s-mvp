@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by superchen on 2017/5/10.
  */
-public interface SModel<T extends SBaseModel> extends S{
+public interface SModel<T extends SBaseModel> extends S {
 
     void setModel(T t);
 
@@ -18,5 +18,9 @@ public interface SModel<T extends SBaseModel> extends S{
     void updateData();
 
     void deleteData();
+
+    <K> void getDataByUUID(K k);
+
+    void notifyDataSetChanged();
 
 }
