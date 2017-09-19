@@ -114,7 +114,7 @@ public class FileUtil {
             fSize = size;
         }
 
-        java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");
+        DecimalFormat df = new DecimalFormat("#0.00");
         StringBuilder resultBuffer = new StringBuilder(df.format(fSize));
         if (suffix != null)
             resultBuffer.append(suffix);

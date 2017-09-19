@@ -1,12 +1,12 @@
 <component name="libraryTable">
   <library name="support-core-ui-25.3.1">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/com.superc.lib/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/res" />
-      <root url="jar://$PROJECT_DIR$/com.superc.lib/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/5a043ab5fa0f474e509ee3293c64a6c11781f144/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/5a043ab5fa0f474e509ee3293c64a6c11781f144/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-core-ui/25.3.1/support-core-ui-25.3.1-sources.jar!/" />
+      <root url="jar://E:/SDK/extras/android/m2repository/com/android/support/support-core-ui/25.3.1/support-core-ui-25.3.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

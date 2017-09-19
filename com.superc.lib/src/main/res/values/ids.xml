@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="superc_lib_glide_tag_id" type="id" />
-    <item name="superc_lib_image_tag" type="id"/>
+    <item name="superc_lib_image_tag" type="id" />
 
     <item name="fab_expand_menu_button" type="id" />
     <item name="fab_label" type="id" />

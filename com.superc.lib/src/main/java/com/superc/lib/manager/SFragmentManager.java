@@ -32,20 +32,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
     /**
      * Fragment的栈
      */
-    private Stack<SFragment> mFragmentStacks = null;
-
-    private static SFragmentManager manager = null;
-
-    public static SFragmentManager getInstance(@NonNull AppCompatActivity activity) {
-        if (manager == null) {
-            synchronized (SFragmentManager.class) {
-                if (manager == null) {
-                    manager = new SFragmentManager(activity);
-                }
-            }
-        }
-        return manager;
-    }
+    private Stack<Fragment> mFragmentStacks = null;
 
     /**
      * support.v4.app.FragmentManager
@@ -54,7 +41,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
     /**
      * 位于栈顶的fragment
      */
-    private SFragment mLastFragment;
+    private Fragment mLastFragment;
     /**
      * fragment的宿主activity
      */
@@ -69,7 +56,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
     private Object backObj = null;
 
 
-    private SFragmentManager(@NonNull AppCompatActivity activity) {
+    public SFragmentManager(@NonNull AppCompatActivity activity) {
         mHoldingActivity = activity;
         mFragmentStacks = new Stack<>();
     }
@@ -88,7 +75,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * 加入自定义回退栈
      */
     private void addFragmentToStack(@NonNull Fragment fragment) {
-        mFragmentStacks.add((SFragment) fragment);
+        mFragmentStacks.add(fragment);
     }
 
     /**
@@ -98,8 +85,20 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      */
     private void startPopFragmentLifeCycle(boolean isBack) {
         /**  设置最上层Fragment的生命周期 **/
+        startSFragmentLifeCycle(isBack);
+        if (isBack) {
+            if (mFragmentStacks.size() > 0) {
+                mLastFragment = mFragmentStacks.get(mFragmentStacks.size() - 1);
+            } else {
+                mLastFragment = null;
+            }
+        }
+    }
+
+    private void startSFragmentLifeCycle(boolean isBack) {
+        if (!(mFragmentStacks.get(mFragmentStacks.size() - 1) instanceof SFragment)) return;
         if (mFragmentStacks.size() >= 1) {
-            final SFragment mLastPopFragment = mFragmentStacks.get(mFragmentStacks.size() - 1);
+            final SFragment mLastPopFragment = (SFragment) mFragmentStacks.get(mFragmentStacks.size() - 1);
             if (mLastPopFragment != null) {
                 if (isBack) {
                     final View view = mLastPopFragment.getView();
@@ -109,7 +108,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
         }
         /**  设置最上层Fragment之前的Fragment的生命周期 **/
         if (mFragmentStacks.size() > 1) {
-            SFragment mBeforePopFragment = mFragmentStacks.get(mFragmentStacks.size() - 2);
+            SFragment mBeforePopFragment = (SFragment) mFragmentStacks.get(mFragmentStacks.size() - 2);
             if (mBeforePopFragment != null) {
                 View view = mBeforePopFragment.getView();
                 if (isBack) {
@@ -125,16 +124,9 @@ public final class SFragmentManager<T extends AppCompatActivity> {
         }
         /** 移除最上层的Fragment **/
         if (isBack && mFragmentStacks.size() > 0) {
-            SFragment mLastPopFragment = mFragmentStacks.get(mFragmentStacks.size() - 1);
+            SFragment mLastPopFragment = (SFragment) mFragmentStacks.get(mFragmentStacks.size() - 1);
             if (mFragmentStacks.contains(mLastPopFragment)) {
                 mFragmentStacks.remove(mLastPopFragment);
-            }
-        }
-        if (isBack) {
-            if (mFragmentStacks.size() > 0) {
-                mLastFragment = mFragmentStacks.get(mFragmentStacks.size() - 1);
-            } else {
-                mLastFragment = null;
             }
         }
     }
@@ -165,7 +157,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    public void addFragmentNoAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    public void addFragmentNoAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         if (containerId == NONE_VALUE) {
             return;
         }
@@ -185,7 +177,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    public void addFragmentNormalAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    public void addFragmentNormalAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         if (containerId == NONE_VALUE) {
             return;
         }
@@ -211,7 +203,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * @param popExit     当有回退栈时的退出动画
      */
     @SuppressLint("ObsoleteSdkInt")
-    public void addFragmentCustomAnimation(@NonNull SFragment fragment, @IdRes int containerId,
+    public void addFragmentCustomAnimation(@NonNull Fragment fragment, @IdRes int containerId,
                                            @AnimRes int enter, @AnimRes int exit,
                                            @AnimRes int popEnter, @AnimRes int popExit) {
         if (containerId == NONE_VALUE) {
@@ -234,7 +226,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    public void replaceFragmentNoAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    public void replaceFragmentNoAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         if (containerId == NONE_VALUE) {
             return;
         }
@@ -254,7 +246,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    public void replaceFragmentNormalAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    public void replaceFragmentNormalAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         if (containerId == NONE_VALUE) {
             return;
         }
@@ -280,7 +272,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      * @param popEnter    当有回退栈时的进入动画
      * @param popExit     当有回退栈时的退出动画
      */
-    public void replaceFragmentCustomAnimation(@NonNull SFragment fragment, @IdRes int containerId,
+    public void replaceFragmentCustomAnimation(@NonNull Fragment fragment, @IdRes int containerId,
                                                @AnimRes int enter, @AnimRes int exit,
                                                @AnimRes int popEnter, @AnimRes int popExit) {
         if (containerId == NONE_VALUE) {
@@ -302,7 +294,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
      *
      * @param fragment 需要加载的fragment
      */
-    public void showAndHideFragmentNoAnimation(@NonNull SFragment fragment, SFragment... hideFragments) {
+    public void showAndHideFragmentNoAnimation(@NonNull Fragment fragment, SFragment... hideFragments) {
         mLastFragment = fragment;
         initFragmentManager();
         FragmentTransaction t = fm.beginTransaction();
@@ -321,11 +313,11 @@ public final class SFragmentManager<T extends AppCompatActivity> {
     /**
      * 在当前activity无动画 加载 一个fragment
      */
-    public void hideFragment(SFragment... hideFragments) {
+    public void hideFragment(Fragment... hideFragments) {
         initFragmentManager();
         FragmentTransaction t = fm.beginTransaction();
         if (hideFragments != null) {
-            for (SFragment f : hideFragments) {
+            for (Fragment f : hideFragments) {
                 if (f != null) {
                     t.hide(f);
                 }
@@ -338,7 +330,7 @@ public final class SFragmentManager<T extends AppCompatActivity> {
     /**
      * 在当前activity无动画 加载 一个fragment
      */
-    public void showFragment(@NonNull SFragment fragment) {
+    public void showFragment(@NonNull Fragment fragment) {
         mLastFragment = fragment;
         initFragmentManager();
         FragmentTransaction t = fm.beginTransaction();
@@ -391,7 +383,10 @@ public final class SFragmentManager<T extends AppCompatActivity> {
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (mLastFragment != null) {
-            boolean tag = mLastFragment.onKeyDown(keyCode, event);
+            boolean tag = false;
+            if (mLastFragment instanceof SFragment) {
+                tag = ((SFragment) mLastFragment).onKeyDown(keyCode, event);
+            }
             startPopFragmentLifeCycle(true);
             if (tag) {
                 return tag;
@@ -415,12 +410,5 @@ public final class SFragmentManager<T extends AppCompatActivity> {
 
     public android.support.v4.app.FragmentManager getFragmentManager() {
         return fm;
-    }
-
-    /**
-     * 当activity摧毁时调用该方法
-     */
-    public void destroy() {
-        manager = null;
     }
 }

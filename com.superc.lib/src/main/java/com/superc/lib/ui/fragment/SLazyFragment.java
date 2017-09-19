@@ -3,10 +3,12 @@ package com.superc.lib.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.superc.lib.presenter.SPresenter;
+
 /**
  * Created by owner on 2017/8/16.
  */
-public abstract class SLazyFragment extends SFragment {
+public abstract class SLazyFragment<T extends SPresenter> extends SFragment<T> {
 
     /**
      * Fragment的View加载完毕的标记

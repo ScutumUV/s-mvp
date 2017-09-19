@@ -1,26 +1,26 @@
 package com.superc.lib.util;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 
 import com.superc.lib.R;
+import com.superc.lib.dialog.WaitDialog;
 
 /**
  * 对话框工具类, 提供常用对话框显示, 使用support.v7包内的AlertDialog样式
  */
 public class DialogUtil {
 
-    public static ProgressDialog createProgressDialog(Context context) {
+    public static WaitDialog createProgressDialog(Context context) {
         return createProgressDialog(context, null, true, true);
     }
 
-    public static ProgressDialog createProgressDialog(@NonNull Context context, String loadingReminderText,
-                                              boolean cancelEnable, boolean cancelTouchOutsideEnable) {
-        ProgressDialog dialog = new ProgressDialog(context);
+    public static WaitDialog createProgressDialog(@NonNull Context context, String loadingReminderText,
+                                                  boolean cancelEnable, boolean cancelTouchOutsideEnable) {
+        WaitDialog dialog = new WaitDialog(context);
         dialog.setMessage(StringUtils.isEmpty(loadingReminderText) ?
                 "加载中..." : loadingReminderText);
         dialog.setCancelable(cancelEnable);

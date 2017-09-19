@@ -45,12 +45,12 @@ public class PermissionUtil {
     }
 
     public static void requestPermissions(@NonNull Activity activity, final @IntRange(from = 0) int requestCode,
-                                   final @NonNull String... permissions) {
+                                          final @NonNull String... permissions) {
         ActivityCompat.requestPermissions(activity, permissions, requestCode);
     }
 
     public static void checkPermissionsAndAutoRequestPermissions(@NonNull Activity activity, final @IntRange(from = 0) int requestCode,
-                                                          final @NonNull String... permissions) {
+                                                                 final @NonNull String... permissions) {
         if (!checkGroupPermissionsGroupStatus(activity, permissions)) {
             requestPermissions(activity, requestCode, permissions);
         }

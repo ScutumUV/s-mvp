@@ -1,7 +1,6 @@
 package com.superc.lib.util;
 
 import android.content.Context;
-import android.net.wifi.WifiManager;
 
 /**
  * Created by superchen on 2017/6/12.

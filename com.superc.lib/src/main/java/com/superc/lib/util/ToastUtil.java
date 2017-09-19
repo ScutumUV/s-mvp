@@ -2,6 +2,8 @@ package com.superc.lib.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,7 +26,11 @@ public class ToastUtil {
 
     private Toast toast;
 
-    public static void show(Context context, String msg) {
+    public static void show(@NonNull Context context, @StringRes int resId) {
+        show(context, context.getString(resId));
+    }
+
+    public static void show(@NonNull Context context, String msg) {
         if (StringUtils.isBlank(msg)) return;
         long t = System.currentTimeMillis();
         if (lastShowTime != 0) {

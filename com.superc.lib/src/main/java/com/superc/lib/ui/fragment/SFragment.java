@@ -19,27 +19,36 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.superc.lib.http.HttpManager;
 import com.superc.lib.manager.SFragmentManager;
 import com.superc.lib.presenter.SPresenter;
+import com.superc.lib.ui.FragmentListener;
 import com.superc.lib.ui.activity.SActivity;
 import com.superc.lib.util.SUtil;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by superchen on 2017/5/16.
  */
-public abstract class SFragment<T extends SPresenter> extends Fragment {
-
-    protected String TAG;
-
-    protected View rootView;
+public abstract class SFragment<P extends SPresenter> extends Fragment {
 
     private SFragmentManager mFragmentManager = null;
 
-    public T presenter;
+    protected String TAG;
+
+    protected View mRootView;
+
+    protected Unbinder mUnBinder;
+
+    protected P presenter;
+
+    protected HttpManager mHttp;
 
     protected boolean isActive = false;
+
+    protected FragmentListener tFragmentListener;
 
 
     @LayoutRes
@@ -53,32 +62,36 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof FragmentListener) {
+            tFragmentListener = (FragmentListener) context;
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isActive = true;
-        mFragmentManager = SFragmentManager.getInstance((AppCompatActivity) getActivity());
+        mFragmentManager = new SFragmentManager((AppCompatActivity) getActivity());
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (setLayoutId() == SActivity.NONE_VALUE || setLayoutId() == 0) {
             throw new IllegalArgumentException("The fragment's layout id not be null");
         }
-        rootView = inflater.inflate(setLayoutId(), container, false);
-        ButterKnife.bind(this, rootView);
+        mRootView = inflater.inflate(setLayoutId(), container, false);
+        mUnBinder = ButterKnife.bind(this, mRootView);
         TAG = getClass().getSimpleName();
-        initTitleBar(rootView);
-        initViews(rootView);
-        return rootView;
+        return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initHttpManager();
+        initTitleBar(mRootView);
+        initViews(mRootView);
     }
 
     @Override
@@ -110,9 +123,14 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //解绑 presenter
-        if (presenter != null) {
+        if (mFragmentManager != null) {
+            mFragmentManager = null;
+            SUtil.unbindReferences(mRootView);
         }
+        if (mHttp != null) {
+            mHttp.destroyAllTask();
+        }
+        mUnBinder.unbind();
     }
 
     @Override
@@ -141,14 +159,6 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     }
 
     /**
-     * 创建相应的 presenter
-     */
-    public void createPresenter(T presenter) {
-        SUtil.checkNull(presenter, "The presenter not be null");
-        this.presenter = presenter;
-    }
-
-    /**
      * popFragment onResume lifecycle when FragmentTransaction.add();
      */
     public void popOnResume(View view) {
@@ -170,7 +180,7 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     @Nullable
     @Override
     public View getView() {
-        return rootView;
+        return mRootView;
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -182,8 +192,8 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
     }
 
     protected void finishActivity() {
-        if (!getActivity().isFinishing()) {
-            getActivity().finish();
+        if (!getHoldingActivity().isFinishing()) {
+            getHoldingActivity().finish();
         }
     }
 
@@ -346,6 +356,17 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
         }
     }
 
+    private void initHttpManager() {
+        if (mHttp == null) {
+            mHttp = new HttpManager(getHoldingActivity());
+        }
+    }
+
+    public void setPresenter(P presenter) {
+        SUtil.checkNull(presenter, "The presenter not be null");
+        this.presenter = presenter;
+    }
+
     public void showLoadingDialog(String message) {
         checkHoldingActivity();
         ((SActivity) getHoldingActivity()).showLoadingDialog(message);
@@ -376,6 +397,27 @@ public abstract class SFragment<T extends SPresenter> extends Fragment {
 
     public void showEmptyView() {
 
+    }
+
+    public Context getContext() {
+        return getHoldingActivity();
+    }
+
+    public HttpManager getHttpManager() {
+        if (mHttp != null) {
+            return mHttp;
+        }
+        if (getHoldingActivity() instanceof SActivity) {
+            return ((SActivity) getHoldingActivity()).getHttpManager();
+        }
+        throw new IllegalArgumentException("The SFragment must use in SActivity");
+    }
+
+    public void destroyAllNetTask() {
+        mRootView = null;
+        if (mHttp != null) {
+            mHttp.destroyAllTask();
+        }
     }
 
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseLibTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 使用 API Level 22 編譯的話，要拿掉前綴字 -->
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- 沉浸式状态栏Theme. -->
+    <style name="ImmersionStatusBarTheme" parent="BaseLibTheme">
+        <!-- Customize your theme or color here. -->
+    </style>
+
+    <style name="FullScreenAppCompatTheme" parent="BaseLibTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="BaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="PressRectangleStyle">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="PressCircleStyle">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    //**********************************************************************************************
+    //**********************************************************************************************
+    //**********************************************************************************************
+
+    <style name="DividerHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.1dp</item>
+        <item name="android:background">@color/divider_background</item>
+    </style>
+
+    <style name="ToolbarDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/toolbar_divider_background</item>
+    </style>
+
+    <style name="DividerHorizontalWith10dpMarginBothRounds">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.1dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">@color/divider_background</item>
+    </style>
+
+    <style name="DividerVertical">
+        <item name="android:layout_width">0.1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/divider_background</item>
+    </style>
+
+    <style name="DividerVerticalWith10dpMarginBothRounds">
+        <item name="android:layout_width">0.1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:background">@color/divider_background</item>
+    </style>
+
+    //**********************************************************************************************
+    //**********************************************************************************************
+    //**********************************************************************************************
+
+
+    <style name="PopupDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <!--<item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>-->
+
+    <style name="Default_PopupWindow_Animation">
+        <item name="android:windowEnterAnimation">@anim/trm_popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/trm_popup_exit</item>
+    </style>
+
+</resources>

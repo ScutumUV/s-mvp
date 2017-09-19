@@ -5,25 +5,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.Gson;
-import com.zhouyou.http.model.ApiResult;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.superc.lib.http.ApiModel;
 
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by superchen on 2017/5/16.
  */
-public class SBaseModel<T> extends ApiResult implements Parcelable, Serializable {
+public class SBaseModel<T> extends ApiModel<T> implements Parcelable, Serializable {
 
     private static final long serialVersionUID = 6109859576148233150L;
     public static final String TYPE = "SBaseModel";
 
+    private T data;
     private SBaseModel mModel = this;
     protected String mType;
     protected String mClassName;
@@ -43,8 +37,8 @@ public class SBaseModel<T> extends ApiResult implements Parcelable, Serializable
     }
 
     @Override
-    public SBaseModel getData() {
-        return this;
+    public T getData() {
+        return data;
     }
 
     /**
@@ -102,4 +96,14 @@ public class SBaseModel<T> extends ApiResult implements Parcelable, Serializable
             return new SBaseModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "SBaseModel{" +
+                "mModel=" + mModel +
+                ", mType='" + mType + '\'' +
+                ", mClassName='" + mClassName + '\'' +
+                ", mObjectId='" + mObjectId + '\'' +
+                '}';
+    }
 }

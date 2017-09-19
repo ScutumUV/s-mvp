@@ -1,6 +1,12 @@
 package com.superc.lib.util;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by superchen on 2017/7/17.
@@ -31,5 +37,25 @@ public class TimeUtil {
             return ct / 2592000 + "月前";
         }
         return ct / 31104000 + "年前";
+    }
+
+    /**
+     * 倒计时
+     *
+     * @param time 倒计时时间
+     */
+    public static Observable<Long> rxCountDown(long time) {
+        if (time < 0) time = 0;
+        final long countTime = time;
+        return Observable.interval(0, 1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Long, Long>() {
+                    @Override
+                    public Long apply(Long aLong) throws Exception {
+                        return countTime - aLong.intValue();
+                    }
+                })
+                .take(countTime + 1);
     }
 }

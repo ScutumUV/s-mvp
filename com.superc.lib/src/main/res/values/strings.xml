@@ -1,6 +1,13 @@
 <resources>
+    //*********************************************************************************************
+    //*********************************************************************************************
 
-    <string name="app_name">SupesrLib</string>
+    <string name="back_to_previous_page">返回上一页</string>
+
+    //*********************************************************************************************
+    //*********************************************************************************************
+
+    <string name="app_name">SuperLib</string>
     <string name="dialog_positive">确定</string>
     <string name="dialog_negative">取消</string>
     <string name="warm_reminder">温馨提示</string>
@@ -16,4 +23,17 @@
     <string name="footer_state_loading">正在加载&#8230;</string>
     <string name="footer_state_no_more_data">已显示全部内容</string>
 
+
+    <!-- error -->
+    <string name="error_please_check_network">请检查网络。</string>
+    <string name="error_timeout">请求超时，网络不好或者服务器不稳定。</string>
+    <string name="error_not_found_server">未发现指定服务器，清切换网络后重试。</string>
+    <string name="error_url_error">URL错误。</string>
+    <string name="error_not_found_cache">没有找到缓存.</string>
+    <string name="error_unKnow">未知错误</string>
+    <string name="error_response_code">服务器响应码%1$d</string>
+    <string name="error_response_code_dex">服务器响应码%1$d，如果你们服务器在这种情况下也返回数据你可以处理。</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

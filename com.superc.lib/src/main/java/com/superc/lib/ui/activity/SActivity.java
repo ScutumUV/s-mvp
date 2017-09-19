@@ -1,7 +1,6 @@
 package com.superc.lib.ui.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +10,13 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.superc.lib.R;
+import com.superc.lib.dialog.WaitDialog;
+import com.superc.lib.http.HttpManager;
 import com.superc.lib.manager.SActivityManager;
 import com.superc.lib.manager.SFragmentManager;
 import com.superc.lib.presenter.SPresenter;
@@ -29,6 +29,7 @@ import com.superc.lib.util.StringUtils;
 import com.superc.lib.util.ToastUtil;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * BaseActivity create by SuperChen
@@ -51,11 +52,9 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
     /**
      * 正在加载对话框
      */
-    protected ProgressDialog progressDialog;
-    /**
-     * 使用CompositeSubscription来持有所有的Subscriptions
-     */
-//    protected CompositeSubscription mCompositeSubscription;
+    protected WaitDialog progressDialog;
+
+    protected Unbinder mUnBinder;
 
     protected P presenter;
     /**
@@ -66,6 +65,11 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * 是否使用沉浸式状态栏
      */
     protected boolean mUseImmersionStatusBar = true;
+
+    protected Object signObj;
+
+    protected HttpManager mHttp = null;
+
 
     /**
      * @return 设置继承 BaseActivity的子Activity的布局Id
@@ -82,7 +86,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (setLayoutResId() == NONE_VALUE || setLayoutResId() == 0) {
             throw new IllegalArgumentException("The activity's layout id not be null");
@@ -151,17 +155,10 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
             SUtil.unbindReferences(mRootView);
         }
         if (mFragmentManager != null) {
-            mFragmentManager.destroy();
             mFragmentManager = null;
         }
-        mRootView = null;
-//        if (mCompositeSubscription != null) {
-//            mCompositeSubscription.unsubscribe();
-//        }
-//        //解绑 presenter
-//        if (presenter != null) {
-//            presenter.unSubscribe();
-//        }
+        destroyAllNetTask();
+        mUnBinder.unbind();
     }
 
     @Override
@@ -184,6 +181,11 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void setPresenter(P presenter) {
+        SUtil.checkNull(presenter, "The Activity presenter not be null");
+        this.presenter = presenter;
     }
 
     public void showToastShort(@NonNull String msg) {
@@ -226,13 +228,21 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         return this;
     }
 
-    public void setPresenter(P presenter) {
-        createNewPresenter(presenter);
+    public void destroyAllNetTask() {
+        mRootView = null;
+        if (presenter != null) {
+
+        }
+        if (mHttp != null) {
+            mHttp.destroyAllTask();
+        }
     }
 
-    protected void createNewPresenter(P presenter) {
-        SUtil.checkNull(presenter, "The Activity presenter not be null");
-        this.presenter = presenter;
+    public HttpManager getHttpManager() {
+        if (mHttp != null) {
+            return mHttp;
+        }
+        return initHttpManager();
     }
 
     /**
@@ -318,7 +328,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    protected void addFragmentNoAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    protected void addFragmentNoAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         initFragmentManager();
         mFragmentManager.addFragmentNoAnimation(fragment, containerId);
     }
@@ -329,7 +339,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    protected void addFragmentNormalAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    protected void addFragmentNormalAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         initFragmentManager();
         mFragmentManager.addFragmentNormalAnimation(fragment, containerId);
     }
@@ -344,13 +354,12 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param popEnter    当有回退栈时的进入动画
      * @param popExit     当有回退栈时的退出动画
      */
-    protected void addFragmentCustomAnimation(@NonNull SFragment fragment, @IdRes int containerId,
+    protected void addFragmentCustomAnimation(@NonNull Fragment fragment, @IdRes int containerId,
                                               @AnimRes int enter, @AnimRes int exit,
                                               @AnimRes int popEnter, @AnimRes int popExit) {
         initFragmentManager();
         mFragmentManager.addFragmentCustomAnimation(fragment, containerId, enter, exit, popEnter, popExit);
     }
-
 
     /**
      * 在当前activity无动画 替换 一个fragment
@@ -358,7 +367,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    protected void replaceFragmentNoAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    protected void replaceFragmentNoAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         initFragmentManager();
         mFragmentManager.replaceFragmentNoAnimation(fragment, containerId);
     }
@@ -369,7 +378,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param fragment    需要加载的fragment
      * @param containerId 加载fragment的ViewId
      */
-    protected void replaceFragmentNormalAnimation(@NonNull SFragment fragment, @IdRes int containerId) {
+    protected void replaceFragmentNormalAnimation(@NonNull Fragment fragment, @IdRes int containerId) {
         initFragmentManager();
         mFragmentManager.replaceFragmentNormalAnimation(fragment, containerId);
     }
@@ -384,7 +393,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      * @param popEnter    当有回退栈时的进入动画
      * @param popExit     当有回退栈时的退出动画
      */
-    protected void replaceFragmentCustomAnimation(@NonNull SFragment fragment, @IdRes int containerId,
+    protected void replaceFragmentCustomAnimation(@NonNull Fragment fragment, @IdRes int containerId,
                                                   @AnimRes int enter, @AnimRes int exit,
                                                   @AnimRes int popEnter, @AnimRes int popExit) {
         initFragmentManager();
@@ -396,17 +405,17 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
      *
      * @param fragment 需要加载的fragment
      */
-    protected void showAndHideFragmentNoAnimation(@NonNull SFragment fragment, SFragment... hideFragments) {
+    protected void showAndHideFragmentNoAnimation(@NonNull Fragment fragment, SFragment... hideFragments) {
         initFragmentManager();
         mFragmentManager.showAndHideFragmentNoAnimation(fragment, hideFragments);
     }
 
-    protected void hideFragment(SFragment... hideFragments) {
+    protected void hideFragment(Fragment... hideFragments) {
         initFragmentManager();
         mFragmentManager.hideFragment(hideFragments);
     }
 
-    protected void showFragment(@NonNull SFragment fragment) {
+    protected void showFragment(@NonNull Fragment fragment) {
         initFragmentManager();
         mFragmentManager.showFragment(fragment);
     }
@@ -431,6 +440,11 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         mFragmentManager.goBack();
     }
 
+
+    /***********************************************************************************************
+     //**********************************************************************************************
+     //*********************************************************************************************/
+
     private void init(Bundle saveInstanceState) {
         initActivityManager();
         mActivityManager.addActivity(this);
@@ -439,12 +453,21 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
         // 然后在onDestroy()或者onDestroyView()里取消所有的订阅。
 //        mCompositeSubscription = new CompositeSubscription();
         TAG = getClass().getSimpleName();
-        ButterKnife.bind(this);
+        signObj = TAG;
+        mUnBinder = ButterKnife.bind(this);
         if (saveInstanceState != null) {
             onOutInstanceState(saveInstanceState);
         }
+        initHttpManager();
         initTitleBar();
         initViews();
+    }
+
+    private HttpManager initHttpManager() {
+        if (mHttp == null) {
+            mHttp = new HttpManager(this);
+        }
+        return mHttp;
     }
 
     private void initActivityManager() {
@@ -455,7 +478,7 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
 
     private void initFragmentManager() {
         if (mFragmentManager == null) {
-            mFragmentManager = SFragmentManager.getInstance(this);
+            mFragmentManager = new SFragmentManager(this);
         }
     }
 
@@ -470,10 +493,6 @@ public abstract class SActivity<P extends SPresenter> extends AppCompatActivity 
             return false;
         }
         return true;
-    }
-
-    public android.support.v4.app.FragmentManager getFm() {
-        return mFragmentManager.getFragmentManager();
     }
 
 //    public CompositeSubscription getCompositeSubscription() {

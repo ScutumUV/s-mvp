@@ -22,7 +22,7 @@
             <enum name="vertical" value="1" />
         </attr>
         <attr name="showDefaultDivider" format="boolean" />
-        
+
     </declare-styleable>
 
 
@@ -59,8 +59,6 @@
         </attr>
         <attr name="indicator_color" format="color" />
     </declare-styleable>
-
-
 
     <declare-styleable name="FloatingActionBtn">
         <attr name="fab_colorPressed" format="color" />
@@ -103,6 +101,5 @@
             <enum name="right" value="3" />
         </attr>
     </declare-styleable>
-
 
 </resources>

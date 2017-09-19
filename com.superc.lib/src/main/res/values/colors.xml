@@ -4,4 +4,20 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="gray">#808080</color>
+
+    <color name="text_normal">#333333</color>
+    <color name="text_brief">#999999</color>
+    <color name="text_hint">#CCCCCC</color>
+    <color name="edit_hint">#E5E5E5</color>
+
+    <color name="one_half_transparent">#40000000</color>
+    <color name="pressed_color">#E5E6E7</color>
+
+    <color name="bottom_navigation_background">#F4F5F7</color>
+    <color name="window_background">#F3F4F5</color>
+    <color name="status_bar_background">#BCBCBC</color>
+    <color name="toolbar_background">#F8F8F8</color>
+    <color name="divider_background">#E9E9E9</color>
+    <color name="toolbar_divider_background">#DFDFDF</color>
+
 </resources>

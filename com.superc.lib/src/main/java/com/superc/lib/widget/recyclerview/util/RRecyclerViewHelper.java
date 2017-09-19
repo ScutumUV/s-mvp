@@ -3,17 +3,20 @@ package com.superc.lib.widget.recyclerview.util;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.SparseArrayCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.superc.lib.widget.recyclerview.base.header.HeaderState;
-import com.superc.lib.widget.recyclerview.callback.AppBarStateChangeListener;
-import com.superc.lib.widget.recyclerview.callback.RRecycleViewLoadListener;
 import com.superc.lib.widget.recyclerview.RRecyclerView;
+import com.superc.lib.widget.recyclerview.StickyVIew.StickyRecyclerHeadersTouchListener;
 import com.superc.lib.widget.recyclerview.base.footer.NormalLoadMoreFooter;
 import com.superc.lib.widget.recyclerview.base.footer.RBaseFooter;
 import com.superc.lib.widget.recyclerview.base.header.ArrowRefreshHeader;
+import com.superc.lib.widget.recyclerview.base.header.HeaderState;
 import com.superc.lib.widget.recyclerview.base.header.RBaseHeader;
+import com.superc.lib.widget.recyclerview.callback.AppBarStateChangeListener;
+import com.superc.lib.widget.recyclerview.callback.RRecycleViewLoadListener;
 import com.superc.lib.widget.recyclerview.progressindicator.ProgressStyle;
 
 import java.util.LinkedList;
@@ -22,10 +25,10 @@ import java.util.List;
 /**
  * Created by superchen on 2017/6/20.
  */
-public class RRecyclerViewHelper {
+public class RRecyclerViewHelper<R extends RRecyclerView> {
 
 
-    public static final float DRAG_RATE = 2.5f;
+    public static float DRAG_RATE = 2.5f;
 
     /**
      * 设置一个很大的数字,尽可能避免和用户的adapter冲突
@@ -35,7 +38,7 @@ public class RRecyclerViewHelper {
     public static final int HEADER_INIT_INDEX = 12000;
     public static final int FOOTER_INIT_INDEX = 13000;
 
-    private RRecyclerView r;
+    private R r;
 
     private Context mContext;
 
@@ -64,6 +67,7 @@ public class RRecyclerViewHelper {
     private RBaseFooter mFooterView = null;
 
     private RBaseHeader mHeaderView = null;
+    private RecyclerView.LayoutManager mLayoutManager;
     /**
      * 下啦刷新开关，默认为开
      */
@@ -92,13 +96,29 @@ public class RRecyclerViewHelper {
      * ScrollView中嵌套RecyclerView时使用
      */
     private boolean mFullLayoutManager = false;
+    /**
+     * 是否显示分组组头信息
+     */
+    private boolean showStickerHeader = false;
+    /**
+     * 分组组头是否可以点击
+     */
+    private boolean stickerHeaderClickEnable = false;
+    /**
+     * 分割线
+     */
+    private DividerItemDecoration dividerItemDecoration;
 
     private RRecycleViewLoadListener mLoadListener;
+    /**
+     * 分组组头点击监听
+     */
+    private StickyRecyclerHeadersTouchListener.OnHeaderClickListener onHeaderClickListener;
 
     private AppBarStateChangeListener.State appbarState = AppBarStateChangeListener.State.EXPANDED;
 
 
-    public <R extends RRecyclerView> RRecyclerViewHelper(Context context, R r) {
+    public RRecyclerViewHelper(Context context, R r) {
         mContext = context;
         this.r = r;
         initHeader();
@@ -363,6 +383,14 @@ public class RRecyclerViewHelper {
         }
     }
 
+    public RecyclerView.LayoutManager getLayoutManager() {
+        return mLayoutManager;
+    }
+
+    public void setLayoutManager(RecyclerView.LayoutManager mLayoutManager) {
+        this.mLayoutManager = mLayoutManager;
+    }
+
     private boolean checkReboundsConform(SparseArrayCompat l, int position) {
         if (l == null) return false;
         if (position >= 0 && position < l.size()) {
@@ -388,6 +416,30 @@ public class RRecyclerViewHelper {
         if (!enable) {
             mFooterView.setStateComplete();
         }
+    }
+
+    public boolean isShowStickerHeader() {
+        return showStickerHeader;
+    }
+
+    public void setShowStickerHeader(boolean showStickerHeader) {
+        this.showStickerHeader = showStickerHeader;
+    }
+
+    public boolean isStickerHeaderClickEnable() {
+        return stickerHeaderClickEnable;
+    }
+
+    public void setStickerHeaderClickEnable(boolean stickerHeaderClickEnable) {
+        this.stickerHeaderClickEnable = stickerHeaderClickEnable;
+    }
+
+    public DividerItemDecoration getDividerItemDecoration() {
+        return dividerItemDecoration;
+    }
+
+    public void setDividerItemDecoration(DividerItemDecoration dividerItemDecoration) {
+        this.dividerItemDecoration = dividerItemDecoration;
     }
 
     public List<Integer> getHeaderTypes() {
@@ -464,6 +516,14 @@ public class RRecyclerViewHelper {
         mLoadListener = listener;
     }
 
+    public StickyRecyclerHeadersTouchListener.OnHeaderClickListener getOnHeaderClickListener() {
+        return onHeaderClickListener;
+    }
+
+    public void setOnHeaderClickListener(StickyRecyclerHeadersTouchListener.OnHeaderClickListener onHeaderClickListener) {
+        this.onHeaderClickListener = onHeaderClickListener;
+    }
+
     public RRecycleViewLoadListener getRRecyclerViewLoadListener() {
         return mLoadListener;
     }
@@ -474,6 +534,14 @@ public class RRecyclerViewHelper {
 
     public void setLastY(float y) {
         mLastY = y;
+    }
+
+    public static float getDragRate() {
+        return DRAG_RATE;
+    }
+
+    public static void setDragRate(float dragRate) {
+        DRAG_RATE = dragRate;
     }
 
 }

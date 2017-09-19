@@ -1,14 +1,7 @@
 package com.superc.lib.manager;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.superc.lib.util.SUtil;
 import com.superc.lib.util.StringUtils;
